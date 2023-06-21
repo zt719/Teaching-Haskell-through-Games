@@ -16,8 +16,8 @@ instance Functor sig => Functor (Free sig) where
 
 instance Functor sig => Applicative (Free sig) where
   pure = Var
-  Var f <*> Var x = Var (f x)
-  Var f <*> Op op = Op (fmap (fmap f) op) 
+  Var f <*> as = fmap f as
+  Op fs <*> as = Op (fmap (<*> as) fs)
 
 instance Functor sig => Monad (Free sig) where
   return = pure
